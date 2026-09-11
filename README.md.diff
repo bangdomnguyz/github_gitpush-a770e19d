@@ -1,0 +1,10 @@
+--- .README.md.orig
++++ README.md
+@@
+-Local files published to GitHub with Git.
++This repository is managed with Git and published to GitHub.
++
++## Workflow
++
++1. Edit local files.
++2. Run `git add`, `git commit`, and `git push`.

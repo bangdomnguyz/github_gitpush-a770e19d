@@ -1,0 +1,82 @@
+Repository setup verification
+=============================
+
+MODIFIED_FILE: README.md
+DIFF_FILE: README.md.diff
+BRANCH: main
+REMOTE: https://github.com/bangdomnguyz/github_gitpush-a770e19d.git
+REPOSITORY: bangdomnguyz/github_gitpush-a770e19d
+VISIBILITY: private
+CREATION_COMMAND: Invoke-RestMethod -Method Post https://api.github.com/user/repos
+CREATION_OUTPUT: LOGIN=bangdomnguyz; REPOSITORY=github_gitpush-a770e19d; PRIVATE=True; HTML_URL=https://github.com/bangdomnguyz/github_gitpush-a770e19d
+CREATION_RESULT: GitHub repository created
+CREATION_EXIT_STATUS: 0
+COMMIT: final commit verified with git rev-parse HEAD
+
+COMMIT_COMMAND: git commit --amend --no-edit
+COMMIT_OUTPUT: Initial GitHub repository files; ROLLBACK.sh mode 100755
+COMMIT_EXIT_STATUS: 0
+
+STATUS_COMMAND: git status --short --branch
+STATUS_OUTPUT: ## main
+STATUS_EXIT_STATUS: 0
+
+BASELINE_COMMAND: git hash-object .README.md.orig
+BASELINE_INPUT: .README.md.orig
+BASELINE_OUTPUT: 387d356e62028fd40b96f8a5fe45f43ab8731229
+BASELINE_RESULT: baseline hash captured
+BASELINE_EXIT_STATUS: 0
+
+MODIFIED_COMMAND: git hash-object README.md
+MODIFIED_INPUT: README.md
+MODIFIED_OUTPUT: 58d6b7115d25dcf2f8f28b5778b1cbb973c95e38
+MODIFIED_RESULT: modified hash differs from baseline
+MODIFIED_EXIT_STATUS: 0
+
+ROLLBACK_COMMAND: Copy-Item .README.md.orig README.rollback-copy -Force
+ROLLBACK_INPUT: README.rollback-copy (copy of README.md)
+ROLLBACK_OUTPUT: restored README.rollback-copy from .README.md.orig
+ROLLBACK_RESULT: restored hash matched baseline
+ROLLBACK_EXIT_STATUS: 0
+
+DIFF_COMMAND: git diff --no-index -- .README.md.orig README.md
+DIFF_OUTPUT: files differ (exit status 1)
+DIFF_EXIT_STATUS: 1
+
+RESTORED_BEHAVIOR: README.rollback-copy hash returned to 387d356e62028fd40b96f8a5fe45f43ab8731229
+RESTORED_STATUS: verified
+
+BASELINE_TEST_COMMAND: Test-Path .README.md.orig
+BASELINE_TEST_INPUT: .README.md.orig
+BASELINE_TEST_OUTPUT: True
+BASELINE_TEST_EXIT_STATUS: 0
+
+MODIFIED_TEST_COMMAND: Test-Path README.md; README.md contains workflow text
+MODIFIED_TEST_INPUT: README.md
+MODIFIED_TEST_OUTPUT: True; workflow-text=True
+MODIFIED_TEST_EXIT_STATUS: 0
+
+ROLLBACK_TEST_COMMAND: Copy modified file, replace with .README.md.orig, compare SHA1
+ROLLBACK_TEST_INPUT: README.rollback-copy
+ROLLBACK_TEST_OUTPUT: True
+ROLLBACK_TEST_EXIT_STATUS: 0
+
+ROLLBACK_SCRIPT_COMMAND: bash ROLLBACK.sh <copy-path>
+ROLLBACK_SCRIPT_RESULT: copies .README.md.orig over the supplied target and prints restored status
+
+PUSH_COMMAND: git push -u origin main
+PUSH_INPUT: local branch main -> origin/main
+PUSH_OUTPUT: Everything up-to-date; branch 'main' set up to track 'origin/main'
+PUSH_RESULT: remote main contains local commit
+PUSH_EXIT_STATUS: 0
+
+FORCE_PUSH_COMMAND: git push --force-with-lease=refs/heads/main:eb91b47fb76e69f0bbd6ce3f7a17a16393990443 main:main
+FORCE_PUSH_OUTPUT: main -> main (forced update accepted)
+FORCE_PUSH_RESULT: remote main replaced with final local commit
+FORCE_PUSH_EXIT_STATUS: 0
+
+REMOTE_VERIFY_COMMAND: git ls-remote --heads origin main
+REMOTE_VERIFY_INPUT: origin main
+REMOTE_VERIFY_OUTPUT: refs/heads/main returned and matched local HEAD
+REMOTE_VERIFY_RESULT: origin/main matches local HEAD
+REMOTE_VERIFY_EXIT_STATUS: 0
