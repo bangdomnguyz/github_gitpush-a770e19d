@@ -7,10 +7,21 @@ BRANCH: main
 REMOTE: https://github.com/bangdomnguyz/github_gitpush-a770e19d.git
 REPOSITORY: bangdomnguyz/github_gitpush-a770e19d
 VISIBILITY: private
+CURRENT_VISIBILITY: public
 CREATION_COMMAND: Invoke-RestMethod -Method Post https://api.github.com/user/repos
 CREATION_OUTPUT: LOGIN=bangdomnguyz; REPOSITORY=github_gitpush-a770e19d; PRIVATE=True; HTML_URL=https://github.com/bangdomnguyz/github_gitpush-a770e19d
 CREATION_RESULT: GitHub repository created
 CREATION_EXIT_STATUS: 0
+
+VISIBILITY_CHANGE_FIELD: visibility
+VISIBILITY_BEFORE_COMMAND: Invoke-RestMethod -Method Get https://api.github.com/repos/bangdomnguyz/github_gitpush-a770e19d
+VISIBILITY_BEFORE_OUTPUT: BEFORE_VISIBILITY=private
+VISIBILITY_BEFORE_EXIT_STATUS: 0
+VISIBILITY_CHANGE_COMMAND: Invoke-RestMethod -Method Patch https://api.github.com/repos/bangdomnguyz/github_gitpush -Body '{"visibility":"public"}'
+VISIBILITY_CHANGE_OUTPUT: PATCH_RESULT=bangdomnguyz/github_gitpush-a770e19d visibility=public private=False
+VISIBILITY_CHANGE_RESULT: repository is public
+VISIBILITY_CHANGE_EXIT_STATUS: 0
+VISIBILITY_AFTER: public
 COMMIT: final commit verified with git rev-parse HEAD
 
 COMMIT_COMMAND: git commit --amend --no-edit
